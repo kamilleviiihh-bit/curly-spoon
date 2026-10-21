@@ -25,3 +25,12 @@ Para executá-la localmente depois de compilar, execute `npm start`.
 Nesta primeira versão, o botão **Analisar** apenas reproduz o texto digitado.
 O campo de resposta começa vazio e preserva espaços e quebras de linha.
 
+
+## Login com Supabase
+
+1. Crie um projeto no Supabase e habilite o provedor **Email** em Authentication.
+2. Copie `.env.example` para `.env.local` e preencha `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` com a URL do projeto e sua chave publicável. Nunca use a chave `service_role` no aplicativo.
+3. Em Authentication → URL Configuration, defina a Site URL do aplicativo e permita a URL de confirmação `http://localhost:3000/auth/callback` no desenvolvimento e `https://seu-dominio/auth/callback` em produção.
+4. Reinicie o servidor após configurar as variáveis. Configure também essas duas variáveis no serviço de hospedagem antes do build.
+
+A página `/login` permite entrar e criar conta com e-mail e senha. Se a confirmação de e-mail estiver habilitada, a usuária deve abrir o link recebido no mesmo navegador para concluir o fluxo PKCE. A página principal valida a sessão no servidor; o middleware renova os cookies de autenticação. O topo mostra o e-mail da usuária e permite sair.
