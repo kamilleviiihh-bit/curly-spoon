@@ -1,15 +1,15 @@
 :root {
   /* Troque as cores aqui para personalizar o site. */
   --cor-fundo: #fff3f7;
-  --cor-cartao: #fffdf9;
+  --cor-cartao: #fffafd;
   --cor-texto: #493b50;
   --cor-secundaria: #716176;
   --cor-principal: #f5bfd5;
   --cor-principal-hover: #eda9c5;
   --cor-borda: #d8c8e5;
   --cor-lilas: #eee3fa;
-  --cor-amarelo: #fff0b8;
-  --cor-amarelo-hover: #f5e19d;
+  --cor-azul: #d4eaff;
+  --cor-azul-hover: #bddcf7;
   --cor-foco: #946181;
 }
 
@@ -17,7 +17,7 @@
 
 body {
   margin: 0;
-  background: linear-gradient(135deg, var(--cor-fundo), var(--cor-amarelo) 50%, var(--cor-lilas));
+  background: linear-gradient(135deg, var(--cor-fundo), var(--cor-azul) 50%, var(--cor-lilas));
   background-attachment: fixed;
   color: var(--cor-texto);
   font-family: Arial, Helvetica, sans-serif;
@@ -92,8 +92,8 @@ input {
 input:focus { outline: 2px solid var(--cor-foco); outline-offset: 2px; }
 button:disabled { opacity: 0.65; cursor: wait; }
 .acoes-login { display: flex; flex-wrap: wrap; gap: 12px; }
-.botao-secundario { background: var(--cor-amarelo); }
-.botao-secundario:hover { background: var(--cor-amarelo-hover); }
+.botao-secundario { background: var(--cor-azul); }
+.botao-secundario:hover { background: var(--cor-azul-hover); }
 .erro { color: #a51d35; line-height: 1.5; }
 .topo {
   display: flex;
