@@ -24,7 +24,7 @@ export async function middleware(request) {
       // An unavailable authentication service must not grant access.
     }
   }
-  if (request.nextUrl.pathname === "/" && !user) {
+  if ((request.nextUrl.pathname === "/" || request.nextUrl.pathname === "/historico") && !user) {
     const target = request.nextUrl.clone();
     target.pathname = "/login";
     target.search = "";
@@ -36,4 +36,4 @@ export async function middleware(request) {
   return response;
 }
 
-export const config = { matcher: ["/", "/login", "/auth/callback"] };
+export const config = { matcher: ["/", "/login", "/auth/callback", "/historico"] };

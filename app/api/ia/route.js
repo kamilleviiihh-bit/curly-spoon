@@ -1,4 +1,5 @@
 import { createClient, hasSupabaseConfig } from "../../../lib/supabase/server";
+import { salvarResposta } from "../../../lib/respostas";
 import { ErroIA, gerarResposta } from "../../../lib/ia";
 
 export const runtime = "nodejs";
@@ -10,8 +11,9 @@ function erro(mensagem, status) {
 
 export async function POST(request) {
   if (!hasSupabaseConfig()) return erro("O acesso ao site ainda não foi configurado.", 503);
+  let supabase;
   try {
-    const supabase = await createClient();
+    supabase = await createClient();
     const { data: { user }, error } = await supabase.auth.getUser();
     if (error || !user) return erro("Sua sessão expirou. Entre novamente para continuar.", 403);
   } catch {
@@ -29,8 +31,18 @@ export async function POST(request) {
 
   try {
     const texto = await gerarResposta(entrada);
+    let salvo = true;
+    try {
+      await salvarResposta(supabase, entrada, texto);
+    } catch {
+      // Preserve the generated résumé even if the database is unavailable.
+      salvo = false;
+    }
     return new Response(texto, {
-      headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" },
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store",
+        "X-Historico-Salvo": salvo ? "sim" : "nao",
+      },
     });
   } catch (error) {
     if (error instanceof ErroIA) return erro(error.message, error.status);

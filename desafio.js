@@ -12,7 +12,7 @@ export const desafio = {
   ],
   modelo: "openrouter/free",
   modoTeste: false,
-  aviso: "Esta resposta foi escrita por uma inteligência artificial e pode conter erros. Confira tudo antes de usar.",
+  aviso: "Esta resposta foi escrita por uma inteligência artificial e pode conter erros. Confira tudo antes de usar. Suas respostas ficam salvas na sua conta e só você pode acessá-las.",
   prompt: `Você monta o primeiro currículo de jovens de 14 a 18 anos que estão começando a vida profissional.
 
 Sua tarefa é encontrar valor profissional em experiências que a pessoa não considera experiência: cuidar de irmão, ajudar no negócio da família, organizar evento da igreja, ser monitora na escola, vender doce, cuidar de redes sociais.

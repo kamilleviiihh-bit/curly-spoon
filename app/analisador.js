@@ -32,6 +32,9 @@ export default function Analisador({ desafio }) {
       const texto = await resultado.text();
       if (!texto.trim()) throw new Error("A resposta veio vazia. Tente novamente.");
       setResposta(texto);
+      if (resultado.headers.get("X-Historico-Salvo") === "nao") {
+        setErro("Seu currículo foi gerado, mas não foi possível salvar no histórico. Copie o texto abaixo para não perdê-lo.");
+      }
     } catch (error) {
       if (error.name === "TimeoutError" || error.name === "AbortError") {
         setErro("A resposta demorou mais que o esperado. Tente novamente.");

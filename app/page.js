@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient, hasSupabaseConfig } from "../lib/supabase/server";
 import Analisador from "./analisador";
-import Sair from "./sair";
+import Topo from "./topo";
 import { desafio } from "../desafio";
 
 export const dynamic = "force-dynamic";
@@ -14,10 +14,7 @@ export default async function Home() {
 
   return (
     <>
-      <header className="topo">
-        <span className="email-usuario">{user.email}</span>
-        <Sair />
-      </header>
+      <Topo email={user.email} />
       <Analisador desafio={{
         nome: desafio.nome, subtitulo: desafio.subtitulo, campos: desafio.campos,
         botao: desafio.botao, aviso: desafio.aviso,

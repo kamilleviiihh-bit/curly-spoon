@@ -39,7 +39,7 @@ A página `/login` permite entrar e criar conta com e-mail e senha. Se a confirm
 
 A migração `supabase/migrations/20261022000000_create_respostas.sql` cria a tabela `public.respostas` e habilita Row Level Security. Cada usuária autenticada pode consultar e inserir apenas as próprias respostas; não há políticas de atualização ou exclusão.
 
-Para aplicar, abra o **SQL Editor** do seu projeto Supabase e execute o conteúdo da migração. O SQL pode ser executado novamente: preserva a tabela e seus dados e recria apenas as duas políticas descritas. Se a tabela já existir, sua estrutura precisa corresponder às colunas da migração. Se o projeto já usa Supabase CLI e está vinculado ao banco correto, aplique com `supabase db push`. Esta migração cria a estrutura; o formulário ainda não salva respostas no banco.
+Para aplicar, abra o **SQL Editor** do seu projeto Supabase e execute o conteúdo da migração. O SQL pode ser executado novamente: preserva a tabela e seus dados e recria apenas as duas políticas descritas. Se a tabela já existir, sua estrutura precisa corresponder às colunas da migração. Se o projeto já usa Supabase CLI e está vinculado ao banco correto, aplique com `supabase db push`. A rota `/api/ia` salva as respostas usando essa tabela e a sessão da usuária.
 
 
 ## Inteligência artificial
@@ -48,6 +48,15 @@ Para aplicar, abra o **SQL Editor** do seu projeto Supabase e execute o conteúd
 
 A IA real está ativada com `modoTeste: false`. Configure `OPENROUTER_API_KEY` nas variáveis de ambiente da Vercel (ou `.env.local` no desenvolvimento) e publique novamente após alterar a chave. Para testar sem chamar a IA nem consumir cota, altere `modoTeste` para `true`. Não coloque a chave no código nem em variáveis `NEXT_PUBLIC_`. O servidor acessa `https://openrouter.ai/api/v1/chat/completions` com o modelo do arquivo e `max_tokens: 900`.
 
-A rota exige sessão válida, aceita campos vazios para omitir seções e exige pelo menos uma resposta preenchida. O exemplo de teste não inventa experiências. A gravação no Supabase e o histórico ainda não foram implementados; por isso o aviso não promete armazenamento.
+A rota exige sessão válida, aceita campos vazios para omitir seções e exige pelo menos uma resposta preenchida. O exemplo de teste não inventa experiências. Após gerar uma resposta, a rota salva a entrada com os rótulos e o texto gerado na tabela `respostas`. Se o banco falhar, o currículo continua visível e a tela avisa que não foi salvo, sem gerar outra resposta automaticamente.
 
-Valide a lógica de IA com `node --test tests/ia.test.mjs`. A suíte usa respostas simuladas, sem chamar a OpenRouter nem consumir cota.
+Valide a lógica de IA com `node --test tests/*.test.mjs`. A suíte usa respostas simuladas, sem chamar a OpenRouter nem consumir cota.
+
+
+## Histórico privado
+
+A página `/historico` exige login e lista somente as respostas da usuária autenticada, da mais recente para a mais antiga, com data e hora de Brasília, campos enviados e resposta. A paginação mostra 20 registros por página. O link **Meu histórico** fica ao lado de **Sair** no topo.
+
+O servidor usa a chave pública com a sessão existente: não usa `service_role` nem aceita `user_id` enviado pelo navegador. A consulta filtra o ID autenticado, e as políticas RLS da migração também protegem as linhas no banco. O ID de quem salva é preenchido por `auth.uid()`. O modo de teste também salva exemplos quando está ligado.
+
+Para conferir no projeto real, entre com a conta A, gere dois currículos e confira o histórico. Em janela anônima, entre com a conta B, gere um currículo e confirme que só ele aparece. Saia e tente acessar `/historico`: deve redirecionar para `/login`.

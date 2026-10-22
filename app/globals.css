@@ -112,3 +112,21 @@ button:disabled { opacity: 0.65; cursor: wait; }
 
 .campo-curriculo { display: flex; flex-direction: column; gap: 12px; }
 .aviso-ia { color: var(--cor-secundaria); font-size: 0.85rem; line-height: 1.5; }
+
+.acoes-topo { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+a { color: var(--cor-texto); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 2px solid var(--cor-foco); outline-offset: 3px; }
+.pagina-historico { align-items: flex-start; }
+.lista-historico { list-style: none; margin: 24px 0 0; padding: 0; }
+.item-historico { padding: 24px 0; border-top: 1px solid var(--cor-borda); }
+.item-historico h2 { line-height: 1.5; }
+.item-historico h3 { font-size: 1rem; margin-top: 24px; }
+.item-historico summary { cursor: pointer; line-height: 1.5; }
+.entrada-historico { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.6; }
+.historico-vazio { margin-top: 24px; line-height: 1.6; }
+.paginacao-historico { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-top: 24px; }
+@media (max-width: 520px) {
+  .topo { flex-wrap: wrap; }
+  .acoes-topo { width: 100%; justify-content: space-between; }
+}
