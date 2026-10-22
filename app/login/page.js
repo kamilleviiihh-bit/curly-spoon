@@ -17,7 +17,7 @@ export default async function Login({ searchParams }) {
     <main className="pagina">
       <section className="conteudo">
         <h1>Entrar</h1>
-        <p className="descricao">Entre ou crie sua conta para acessar o Analisador de Texto.</p>
+        <p className="descricao">Entre ou crie sua conta para acessar Crie seu 1° curriculo!</p>
         <FormularioLogin erroConfirmacao={params.erro ? "Não foi possível confirmar seu e-mail. O link pode ter expirado. Tente entrar ou solicite um novo cadastro." : null} />
       </section>
     </main>

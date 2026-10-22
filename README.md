@@ -1,4 +1,4 @@
-# Curly Spoon — Analisador de Texto
+# Curly Spoon — Crie seu 1° curriculo!
 
 Projeto Next.js com App Router e JavaScript, preparado para publicar na Vercel.
 

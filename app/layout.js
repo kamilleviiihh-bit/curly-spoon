@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Analisador de Texto",
+  title: "Crie seu 1° curriculo!",
   description: "Um projeto simples de análise de texto.",
 };
 

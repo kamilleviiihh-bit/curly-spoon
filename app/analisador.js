@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 // Troque estes textos para personalizar a página.
-const TITULO = "Analisador de Texto";
+const TITULO = "Crie seu 1° curriculo!";
 const DESCRICAO = "Digite um texto abaixo e clique em Analisar para ver o resultado.";
 
 export default function Analisador() {
