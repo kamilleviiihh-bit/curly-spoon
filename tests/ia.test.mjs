@@ -42,6 +42,8 @@ test('OpenRouter recebe endpoint, autorização, modelo, prompt e limite correto
       const body = JSON.parse(options.body);
       assert.equal(body.model, config.modelo);
       assert.equal(body.max_tokens, 900);
+      assert.equal(body.stream, false);
+      assert.deepEqual(body.reasoning, { effort: "none" });
       assert.equal(body.messages[0].content, montarPrompt(campos));
       assert.ok(options.signal instanceof AbortSignal);
       return Response.json({ choices: [{ message: { content: 'CURRÍCULO\nSegunda linha' } }] });
@@ -77,5 +79,57 @@ test('resposta vazia, formato inválido ou JSON inválido não viram sucesso', a
     await assert.rejects(gerarResposta(campos, {
       config, apiKey: 'teste', fetchImpl: async () => response,
     }), /não retornou uma resposta válida/);
+  }
+});
+
+
+test('aceita conteúdo em blocos de texto sem exibir raciocínio ou ferramentas', async () => {
+  const texto = await gerarResposta(campos, {
+    config, apiKey: 'teste', fetchImpl: async () => Response.json({ choices: [{
+      finish_reason: 'stop', message: {
+        reasoning: 'Conteúdo interno que não deve ser exibido',
+        content: [
+          { type: 'text', text: 'FORMAÇÃO\n' },
+          { type: 'reasoning', text: 'Não mostrar' },
+          { type: 'text', text: 'Ensino médio' },
+        ],
+      },
+    }] }),
+  });
+  assert.equal(texto, 'FORMAÇÃO\nEnsino médio');
+});
+
+for (const [code, status, message] of [
+  [401, 401, 'Chave da IA inválida.'],
+  ['429', 429, 'Você atingiu o limite de uso de hoje.'],
+  [402, 503, 'A conta da IA não tem saldo disponível. Verifique a conta na OpenRouter.'],
+  [503, 502, 'O serviço de IA não conseguiu concluir o pedido. Tente novamente em instantes.'],
+]) {
+  test(`traduz erro ${code} mesmo com HTTP 200, sem expor detalhes do provedor`, async () => {
+    for (const data of [{ error: { code, message: 'Segredo interno' } }, { choices: [{ error: { code } }] }]) {
+      await assert.rejects(gerarResposta(campos, {
+        config, apiKey: 'teste', fetchImpl: async () => Response.json(data),
+      }), (e) => e.status === status && e.message === message);
+    }
+  });
+}
+
+test('não confunde raciocínio sem resposta final ou texto truncado com currículo pronto', async () => {
+  for (const content of [null, 'Currículo cortado no meio']) {
+    await assert.rejects(gerarResposta(campos, {
+      config, apiKey: 'teste', fetchImpl: async () => Response.json({ choices: [{
+        finish_reason: 'length', message: { content, reasoning: 'Internal only' },
+      }] }),
+    }), /atingiu o limite antes de concluir/);
+  }
+});
+
+test('recusa e erro de geração não viram sucesso, mesmo com texto parcial', async () => {
+  for (const finish_reason of ['content_filter', 'error']) {
+    await assert.rejects(gerarResposta(campos, {
+      config, apiKey: 'teste', fetchImpl: async () => Response.json({ choices: [{
+        finish_reason, message: { content: 'Texto parcial' },
+      }] }),
+    }), (e) => e.status === 502);
   }
 });
