@@ -34,3 +34,9 @@ O campo de resposta começa vazio e preserva espaços e quebras de linha.
 4. Reinicie o servidor após configurar as variáveis. Configure também essas duas variáveis no serviço de hospedagem antes do build.
 
 A página `/login` permite entrar e criar conta com e-mail e senha. Se a confirmação de e-mail estiver habilitada, a usuária deve abrir o link recebido no mesmo navegador para concluir o fluxo PKCE. A página principal valida a sessão no servidor; o middleware renova os cookies de autenticação. O topo mostra o e-mail da usuária e permite sair.
+
+## Tabela de respostas
+
+A migração `supabase/migrations/20261022000000_create_respostas.sql` cria a tabela `public.respostas` e habilita Row Level Security. Cada usuária autenticada pode consultar e inserir apenas as próprias respostas; não há políticas de atualização ou exclusão.
+
+Para aplicar, abra o **SQL Editor** do seu projeto Supabase e execute o conteúdo da migração uma vez. Se o projeto já usa Supabase CLI e está vinculado ao banco correto, aplique com `supabase db push`. Esta migração cria a estrutura; o botão **Analisar** ainda não salva respostas no banco.
