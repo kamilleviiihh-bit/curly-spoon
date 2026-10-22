@@ -11,18 +11,18 @@ Projeto Next.js com App Router e JavaScript, preparado para publicar na Vercel.
 
 ## Personalização
 
-- Textos da página: constantes no início de `app/page.js`.
+- Textos da página: `desafio.js`.
 - Título da aba do navegador e descrição: `app/layout.js`.
 - Cores e estilos: `app/globals.css` (variáveis no início do arquivo).
 
 ## Publicar na Vercel
 
-Importe este repositório na Vercel, selecione Next.js e clique em Deploy. Não é necessário configurar variáveis de ambiente.
+Importe este repositório na Vercel, selecione Next.js e clique em Deploy. Configure as variáveis de ambiente descritas abaixo antes do build.
 
 Para verificar a compilação de produção, execute `npm run build`.
 Para executá-la localmente depois de compilar, execute `npm start`.
 
-Nesta primeira versão, o botão **Analisar** apenas reproduz o texto digitado.
+O formulário de currículo usa `desafio.js`. Com `modoTeste: true`, retorna um exemplo local sem chamar a IA.
 O campo de resposta começa vazio e preserva espaços e quebras de linha.
 
 
@@ -39,4 +39,15 @@ A página `/login` permite entrar e criar conta com e-mail e senha. Se a confirm
 
 A migração `supabase/migrations/20261022000000_create_respostas.sql` cria a tabela `public.respostas` e habilita Row Level Security. Cada usuária autenticada pode consultar e inserir apenas as próprias respostas; não há políticas de atualização ou exclusão.
 
-Para aplicar, abra o **SQL Editor** do seu projeto Supabase e execute o conteúdo da migração. O SQL pode ser executado novamente: preserva a tabela e seus dados e recria apenas as duas políticas descritas. Se a tabela já existir, sua estrutura precisa corresponder às colunas da migração. Se o projeto já usa Supabase CLI e está vinculado ao banco correto, aplique com `supabase db push`. Esta migração cria a estrutura; o botão **Analisar** ainda não salva respostas no banco.
+Para aplicar, abra o **SQL Editor** do seu projeto Supabase e execute o conteúdo da migração. O SQL pode ser executado novamente: preserva a tabela e seus dados e recria apenas as duas políticas descritas. Se a tabela já existir, sua estrutura precisa corresponder às colunas da migração. Se o projeto já usa Supabase CLI e está vinculado ao banco correto, aplique com `supabase db push`. Esta migração cria a estrutura; o formulário ainda não salva respostas no banco.
+
+
+## Inteligência artificial
+
+`desafio.js` define nome, subtítulo, campos, botão, aviso, modelo, prompt e `modoTeste`. O nome personalizado do site foi mantido. O formulário é montado a partir desse arquivo; o prompt permanece no servidor. A rota autenticada `POST /api/ia` recebe um objeto JSON com os IDs dos campos e retorna texto simples, preservando as quebras de linha. Erros retornam JSON com `erro` em português.
+
+O modo de teste vem ligado e não exige chave nem consome cota. Para usar IA real, configure `OPENROUTER_API_KEY` nas variáveis de ambiente da Vercel (ou `.env.local` no desenvolvimento), altere `modoTeste` para `false` e publique novamente. Não coloque a chave no código nem em variáveis `NEXT_PUBLIC_`. O servidor acessa `https://openrouter.ai/api/v1/chat/completions` com o modelo do arquivo e `max_tokens: 900`.
+
+A rota exige sessão válida, aceita campos vazios para omitir seções e exige pelo menos uma resposta preenchida. O exemplo de teste não inventa experiências. A gravação no Supabase e o histórico ainda não foram implementados; por isso o aviso não promete armazenamento.
+
+Valide a lógica de IA com `node --test tests/ia.test.mjs`. A suíte usa respostas simuladas, sem chamar a OpenRouter nem consumir cota.

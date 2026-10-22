@@ -1,39 +1,78 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-// Troque estes textos para personalizar a página.
-const TITULO = "Crie seu 1° curriculo!";
-const DESCRICAO = "Digite um texto abaixo e clique em Analisar para ver o resultado.";
-
-export default function Analisador() {
-  const [texto, setTexto] = useState("");
+export default function Analisador({ desafio }) {
+  const [campos, setCampos] = useState({});
   const [resposta, setResposta] = useState("");
+  const [erro, setErro] = useState("");
+  const [analisando, setAnalisando] = useState(false);
+  const enviando = useRef(false);
 
-  function analisar(evento) {
+  async function analisar(evento) {
     evento.preventDefault();
-    setResposta(texto);
+    if (enviando.current) return;
+    enviando.current = true;
+    setAnalisando(true);
+    setErro("");
+    setResposta("");
+    try {
+      const resultado = await fetch("/api/ia", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(campos),
+        signal: AbortSignal.timeout(60000),
+      });
+      if (resultado.status === 429) throw new Error("Você atingiu o limite de uso de hoje.");
+      if (resultado.status === 401) throw new Error("Chave da IA inválida.");
+      if (!resultado.ok) {
+        const data = await resultado.json().catch(() => null);
+        throw new Error(data?.erro || "Não foi possível montar seu currículo. Tente novamente.");
+      }
+      const texto = await resultado.text();
+      if (!texto.trim()) throw new Error("A resposta veio vazia. Tente novamente.");
+      setResposta(texto);
+    } catch (error) {
+      if (error.name === "TimeoutError" || error.name === "AbortError") {
+        setErro("A resposta demorou mais que o esperado. Tente novamente.");
+      } else if (error instanceof TypeError) {
+        setErro("Não foi possível conectar. Verifique sua conexão e tente novamente.");
+      } else {
+        setErro(error.message || "Não foi possível montar seu currículo. Tente novamente.");
+      }
+    } finally {
+      enviando.current = false;
+      setAnalisando(false);
+    }
   }
 
   return (
     <main className="pagina">
       <section className="conteudo">
-        <h1>{TITULO}</h1>
-        <p className="descricao">{DESCRICAO}</p>
-
-        <form onSubmit={analisar} className="formulario">
-          <label htmlFor="texto">Seu texto</label>
-          <textarea
-            id="texto"
-            value={texto}
-            onChange={(evento) => setTexto(evento.target.value)}
-            placeholder="Escreva algo aqui..."
-            rows={6}
-          />
-          <button type="submit">Analisar</button>
+        <h1>{desafio.nome}</h1>
+        <p className="descricao">{desafio.subtitulo}</p>
+        <form onSubmit={analisar} className="formulario" aria-busy={analisando}>
+          {desafio.campos.map(({ id, rotulo, linhas }) => (
+            <div className="campo-curriculo" key={id}>
+              <label htmlFor={id}>{rotulo}</label>
+              <textarea
+                id={id}
+                name={id}
+                rows={linhas}
+                maxLength={6000}
+                value={campos[id] || ""}
+                onChange={(evento) => setCampos((anteriores) => ({ ...anteriores, [id]: evento.target.value }))}
+              />
+            </div>
+          ))}
+          <button type="submit" disabled={analisando}>
+            {analisando ? "Analisando..." : desafio.botao}
+          </button>
+          <small className="aviso-ia">{desafio.aviso}</small>
+          {analisando && <p role="status">Montando seu currículo...</p>}
+          {erro && <p className="erro" role="alert">{erro}</p>}
         </form>
-
-        <section className="resultado" aria-live="polite">
+        <section className="resultado" aria-live="polite" aria-busy={analisando}>
           <h2>Resposta</h2>
           <div className="area-resposta">{resposta}</div>
         </section>
