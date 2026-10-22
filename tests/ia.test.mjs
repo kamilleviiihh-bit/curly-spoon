@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { desafio } from '../desafio.js';
 import { gerarResposta, montarPrompt, validarCampos } from '../lib/ia.js';
 
-const campos = { escola: 'Ensino médio', cursos: '', atividades: 'Cuido dos meus irmãos', habilidades: '', objetivo: 'Jovem aprendiz' };
+const campos = { escola: 'Ensino médio', cursos: '', experiencias: 'Cuido dos meus irmãos', hard_skills: 'Excel básico', soft_skills: 'Organizo a rotina dos meus irmãos', objetivo: 'Jovem aprendiz' };
 const config = { ...desafio, modoTeste: false };
 
 test('modo de teste usa os campos e não faz requisições nem exige chave', async () => {
@@ -14,7 +14,9 @@ test('modo de teste usa os campos e não faz requisições nem exige chave', asy
   assert.match(texto, /EXEMPLO DE TESTE/);
   assert.match(texto, /Ensino médio/);
   assert.match(texto, /Cuido dos meus irmãos/);
-  assert.doesNotMatch(texto, /CURSOS\n|HABILIDADES\n/);
+  assert.match(texto, /HARD SKILLS\nExcel básico/);
+  assert.match(texto, /SOFT SKILLS\nOrganizo a rotina dos meus irmãos/);
+  assert.doesNotMatch(texto, /CURSOS\n/);
 });
 
 test('valida tipos, limite, campos em branco e permite seções vazias', () => {
@@ -29,6 +31,10 @@ test('substitui todos os campos sem reinterpretar marcadores digitados pela pess
   assert.match(texto, /ESCOLA: Escola \{objetivo\} \$&/);
   assert.match(texto, /CURSOS: \n/);
   assert.match(texto, /OBJETIVO: Jovem aprendiz/);
+  assert.match(texto, /EXPERIÊNCIAS: Cuido dos meus irmãos/);
+  assert.match(texto, /HARD SKILLS: Excel básico/);
+  assert.match(texto, /SOFT SKILLS: Organizo a rotina dos meus irmãos/);
+  assert.doesNotMatch(texto.replace('Escola {objetivo} $&', ''), /\{(?:escola|cursos|experiencias|objetivo|hard_skills|soft_skills)\}/);
 });
 
 test('OpenRouter recebe endpoint, autorização, modelo, prompt e limite corretos', async () => {
