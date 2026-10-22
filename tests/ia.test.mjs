@@ -8,7 +8,7 @@ const config = { ...desafio, modoTeste: false };
 
 test('modo de teste usa os campos e não faz requisições nem exige chave', async () => {
   const texto = await gerarResposta(campos, {
-    apiKey: '',
+    config: { ...desafio, modoTeste: true }, apiKey: '',
     fetchImpl: () => { throw new Error('Não deveria acessar a rede'); },
   });
   assert.match(texto, /EXEMPLO DE TESTE/);

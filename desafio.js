@@ -10,7 +10,7 @@ export const desafio = {
     { id: "objetivo", rotulo: "Que tipo de vaga você procura?", linhas: 2 },
   ],
   modelo: "openrouter/free",
-  modoTeste: true,
+  modoTeste: false,
   aviso: "Esta resposta foi escrita por uma inteligência artificial e pode conter erros. Confira tudo antes de usar.",
   prompt: `Você monta o primeiro currículo de jovens de 14 a 18 anos que nunca tiveram emprego formal.
 

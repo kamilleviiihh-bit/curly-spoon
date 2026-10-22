@@ -46,7 +46,7 @@ Para aplicar, abra o **SQL Editor** do seu projeto Supabase e execute o conteúd
 
 `desafio.js` define nome, subtítulo, campos, botão, aviso, modelo, prompt e `modoTeste`. O nome personalizado do site foi mantido. O formulário é montado a partir desse arquivo; o prompt permanece no servidor. A rota autenticada `POST /api/ia` recebe um objeto JSON com os IDs dos campos e retorna texto simples, preservando as quebras de linha. Erros retornam JSON com `erro` em português.
 
-O modo de teste vem ligado e não exige chave nem consome cota. Para usar IA real, configure `OPENROUTER_API_KEY` nas variáveis de ambiente da Vercel (ou `.env.local` no desenvolvimento), altere `modoTeste` para `false` e publique novamente. Não coloque a chave no código nem em variáveis `NEXT_PUBLIC_`. O servidor acessa `https://openrouter.ai/api/v1/chat/completions` com o modelo do arquivo e `max_tokens: 900`.
+A IA real está ativada com `modoTeste: false`. Configure `OPENROUTER_API_KEY` nas variáveis de ambiente da Vercel (ou `.env.local` no desenvolvimento) e publique novamente após alterar a chave. Para testar sem chamar a IA nem consumir cota, altere `modoTeste` para `true`. Não coloque a chave no código nem em variáveis `NEXT_PUBLIC_`. O servidor acessa `https://openrouter.ai/api/v1/chat/completions` com o modelo do arquivo e `max_tokens: 900`.
 
 A rota exige sessão válida, aceita campos vazios para omitir seções e exige pelo menos uma resposta preenchida. O exemplo de teste não inventa experiências. A gravação no Supabase e o histórico ainda não foram implementados; por isso o aviso não promete armazenamento.
 
