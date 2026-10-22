@@ -39,4 +39,4 @@ A página `/login` permite entrar e criar conta com e-mail e senha. Se a confirm
 
 A migração `supabase/migrations/20261022000000_create_respostas.sql` cria a tabela `public.respostas` e habilita Row Level Security. Cada usuária autenticada pode consultar e inserir apenas as próprias respostas; não há políticas de atualização ou exclusão.
 
-Para aplicar, abra o **SQL Editor** do seu projeto Supabase e execute o conteúdo da migração uma vez. Se o projeto já usa Supabase CLI e está vinculado ao banco correto, aplique com `supabase db push`. Esta migração cria a estrutura; o botão **Analisar** ainda não salva respostas no banco.
+Para aplicar, abra o **SQL Editor** do seu projeto Supabase e execute o conteúdo da migração. O SQL pode ser executado novamente: preserva a tabela e seus dados e recria apenas as duas políticas descritas. Se a tabela já existir, sua estrutura precisa corresponder às colunas da migração. Se o projeto já usa Supabase CLI e está vinculado ao banco correto, aplique com `supabase db push`. Esta migração cria a estrutura; o botão **Analisar** ainda não salva respostas no banco.
