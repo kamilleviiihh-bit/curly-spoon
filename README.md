@@ -60,3 +60,6 @@ A página `/historico` exige login e lista somente as respostas da usuária aute
 O servidor usa a chave pública com a sessão existente: não usa `service_role` nem aceita `user_id` enviado pelo navegador. A consulta filtra o ID autenticado, e as políticas RLS da migração também protegem as linhas no banco. O ID de quem salva é preenchido por `auth.uid()`. O modo de teste também salva exemplos quando está ligado.
 
 Para conferir no projeto real, entre com a conta A, gere dois currículos e confira o histórico. Em janela anônima, entre com a conta B, gere um currículo e confirme que só ele aparece. Saia e tente acessar `/historico`: deve redirecionar para `/login`.
+
+
+O prompt de currículo orienta usar somente o conteúdo explicitamente informado em cada campo, sem deduzir habilidades a partir de cursos ou experiências, sem inventar resultados ou métricas e sem exigir uma quantidade mínima de itens. Campos vazios devem ser omitidos; a revisão de ortografia e pontuação não deve ampliar o significado. Respostas já salvas no histórico não são reescritas.
