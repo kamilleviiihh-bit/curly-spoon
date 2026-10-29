@@ -3,7 +3,7 @@
   --cor-principal-hover: #1b2c63;
   --cor-destaque: #36D6C5;
   --cor-destaque-hover: #27c2b2;
-  --cor-fundo: #f4f7fb;
+  --cor-fundo: #d9f5f7;
   --cor-cartao: #ffffff;
   --cor-texto: #182640;
   --cor-secundaria: #58677e;
@@ -15,7 +15,7 @@
 html { color-scheme: light; }
 body {
   margin: 0;
-  background: radial-gradient(ellipse at top right, #e8f9f7 0, transparent 45%), var(--cor-fundo);
+  background: var(--cor-fundo);
   color: var(--cor-texto);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
