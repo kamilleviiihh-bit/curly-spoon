@@ -160,3 +160,86 @@ button:disabled { opacity: 0.65; cursor: wait; box-shadow: none; }
 
 .link-recuperacao { display: inline-flex; align-items: center; min-height: 44px; margin-top: 16px; font-size: 0.9rem; font-weight: 600; }
 .mensagem-sucesso { padding: 16px; background: #e7f8f2; border: 1px solid #b4dfd0; border-radius: 12px; color: #185440; line-height: 1.7; }
+
+/* Área de trabalho do criador de currículo. */
+.pagina-principal { display: block; padding: 32px 24px 56px; }
+.ferramenta-curriculo { max-width: 1240px; margin: 0 auto; min-width: 0; }
+.cabecalho-ferramenta { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+.cabecalho-ferramenta h1 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 8px; }
+.cabecalho-ferramenta .slogan { font-size: 0.85rem; font-weight: 400; margin: 0; color: var(--cor-secundaria); }
+.navegacao-ferramenta { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; background: #ffffffad; border: 1px solid #b3d8d0; border-radius: 12px; }
+.navegacao-ferramenta a { padding: 9px 12px; font-size: 0.85rem; font-weight: 600; text-decoration: none; border-radius: 8px; }
+.navegacao-ferramenta a:hover { background: #e4f4f0; }
+.area-trabalho { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+.painel-dados { min-width: 0; padding: 28px; background: #fff; border: 1px solid var(--cor-borda); border-radius: 18px; }
+.cabecalho-secao { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 24px; }
+.cabecalho-secao h2 { font-size: 1.15rem; margin: 0 0 6px; }
+.cabecalho-secao p { margin: 0; font-size: 0.85rem; color: var(--cor-secundaria); line-height: 1.65; max-width: 80ch; }
+.etapa-ferramenta { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 32px; height: 32px; border-radius: 9px; background: #e9effb; color: var(--cor-principal); font-size: 0.75rem; font-weight: 700; }
+.painel-dados .formulario { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 16px; }
+.painel-dados .formulario > :not(.campo-curriculo) { grid-column: 1 / -1; }
+.painel-dados label { font-size: 0.8rem; }
+.painel-dados textarea { padding: 12px; font-size: 0.9rem; }
+.painel-dados .campo-curriculo { justify-content: space-between; }
+.resultado-painel { margin: 0; position: sticky; top: 24px; min-width: 0; padding: 28px; }
+.resultado-painel .area-resposta { min-height: 300px; max-height: 68vh; overflow-y: auto; padding: 20px; font-size: 0.9rem; }
+.resultado-vazio { min-height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; white-space: normal; padding: 16px; }
+.resultado-vazio svg { width: 48px; height: 48px; color: #6784ad; margin-bottom: 12px; }
+.resultado-vazio p { font-weight: 600; color: var(--cor-principal); margin: 0 0 8px; }
+.resultado-vazio span { color: var(--cor-secundaria); font-size: 0.85rem; }
+#dados-curriculo, #resultado-curriculo, #modelos-curriculo { scroll-margin-top: 24px; }
+
+.secao-modelos { margin-top: 36px; padding-top: 28px; border-top: 1px solid #a9d2c8; }
+.grade-modelos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.cartao-modelo { overflow: hidden; min-width: 0; background: #fff; border: 1px solid var(--cor-borda); border-radius: 18px; }
+.miniatura-modelo { height: 330px; overflow: hidden; background: #eaf0f5; padding: 24px 24px 0; border-bottom: 1px solid var(--cor-borda); }
+.folha-curriculo { min-height: 620px; background: #fff; color: #202938; padding: 36px; box-shadow: 0 3px 15px #18264012; }
+.texto-modelo { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; font-size: 0.9rem; line-height: 1.7; margin: 0; }
+.texto-modelo::first-line { font-size: 1.25em; font-weight: 700; }
+.modelo-classico { border-top: 3px solid #354259; }
+.modelo-classico .texto-modelo { font-family: Georgia, "Times New Roman", serif; }
+.modelo-moderno { border-left: 30px solid var(--cor-principal); border-top: 5px solid var(--cor-destaque); }
+.modelo-moderno .texto-modelo::first-line { color: var(--cor-principal); font-family: var(--fonte-titulos), Arial, sans-serif; }
+.modelo-essencial { border-top: 10px solid var(--cor-destaque); padding: 32px; }
+.modelo-essencial .texto-modelo { font-size: 0.85rem; line-height: 1.55; }
+.miniatura-modelo .folha-curriculo { padding: 22px; }
+.miniatura-modelo .texto-modelo { font-size: 0.65rem; line-height: 1.7; }
+.miniatura-modelo .modelo-essencial .texto-modelo { font-size: 0.62rem; line-height: 1.55; }
+.miniatura-modelo .modelo-moderno { border-left-width: 22px; }
+.descricao-modelo { padding: 24px; }
+.descricao-modelo h3 { margin: 0 0 8px; }
+.descricao-modelo p { font-size: 0.85rem; color: var(--cor-secundaria); margin: 0 0 20px; }
+.botao-modelo { width: 100%; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
+.dialog-modelo { width: min(850px, calc(100% - 32px)); max-height: 90vh; padding: 0; border: 1px solid var(--cor-borda); border-radius: 18px; color: var(--cor-texto); background: #edf2f7; }
+.dialog-modelo::backdrop { background: #142549b3; }
+.barra-modelo { position: sticky; top: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; padding: 20px 24px; border-bottom: 1px solid var(--cor-borda); }
+.barra-modelo h2 { font-size: 1rem; margin: 0 0 4px; }
+.barra-modelo p { font-size: 0.8rem; color: var(--cor-secundaria); margin: 0; }
+.barra-modelo button { min-height: 44px; padding: 8px 16px; }
+.visualizacao-modelo { padding: 28px; }
+@media (max-width: 980px) {
+  .cabecalho-ferramenta { flex-direction: column; align-items: flex-start; }
+  .area-trabalho { grid-template-columns: minmax(0, 1fr); }
+  .resultado-painel { position: static; }
+  .grade-modelos { gap: 16px; }
+  .miniatura-modelo { padding: 16px 12px 0; height: 280px; }
+  .miniatura-modelo .folha-curriculo { padding: 14px; }
+  .descricao-modelo { padding: 18px; }
+}
+@media (max-width: 700px) {
+  .grade-modelos { grid-template-columns: minmax(0, 1fr); }
+  .miniatura-modelo { height: 320px; padding: 24px 36px 0; }
+  .miniatura-modelo .folha-curriculo { padding: 24px; }
+}
+@media (max-width: 640px) {
+  .pagina-principal { padding: 24px 16px 40px; }
+  .painel-dados, .resultado-painel { padding: 24px 20px; }
+  .painel-dados .formulario { grid-template-columns: minmax(0, 1fr); }
+  .navegacao-ferramenta { width: 100%; justify-content: space-between; gap: 0; }
+  .navegacao-ferramenta a { padding: 9px 10px; }
+  .cabecalho-secao { gap: 10px; }
+  .visualizacao-modelo { padding: 16px; }
+  .visualizacao-modelo .folha-curriculo { padding: 22px 18px; }
+  .visualizacao-modelo .modelo-moderno { border-left-width: 16px; }
+  .barra-modelo { padding: 16px; align-items: flex-start; }
+}

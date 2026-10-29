@@ -72,3 +72,10 @@ O link **Esqueci a senha** em `/login` abre `/esqueci-senha`. O Supabase envia u
 Em Authentication → URL Configuration, mantenha a Site URL do aplicativo e permita o callback de recuperação no mesmo domínio. A regra `https://seu-dominio/**` já abrange esse caminho; no desenvolvimento, permita também `http://localhost:3000/**`. Mantenha o template de recuperação com o link de confirmação padrão do Supabase (`{{ .ConfirmationURL }}`), e configure o envio de e-mails no Supabase conforme as necessidades do projeto.
 
 Abra o link de recuperação no mesmo navegador em que solicitou, pois o fluxo usa PKCE. Links expirados ou já usados exigem nova solicitação. A tela de sucesso mantém a sessão e permite ir ao site. Nenhuma chave adicional ou mudança de tabela é necessária.
+
+
+## Área de trabalho e modelos de currículo
+
+A página principal organiza o formulário e o resultado lado a lado no computador e em sequência no celular, com atalhos para dados, resultado e modelos. Ao final, os modelos **Clássico**, **Moderno** e **Essencial** podem ser abertos para leitura completa, inclusive pelo teclado.
+
+Os três modelos apresentam exatamente o mesmo texto gerado pela IA, sem acrescentar ou deduzir informações. Antes da geração, exibem apenas campos ilustrativos entre colchetes. A escolha de visualização não faz uma nova chamada à IA, não modifica a resposta nem altera o histórico salvo.

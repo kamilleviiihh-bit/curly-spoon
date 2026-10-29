@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import ModelosCurriculo from "./modelos-curriculo";
 
 export default function Analisador({ desafio }) {
   const [campos, setCampos] = useState({});
@@ -51,10 +52,27 @@ export default function Analisador({ desafio }) {
 
   return (
     <main className="pagina pagina-principal">
-      <section className="conteudo conteudo-formulario">
-        <h1>{desafio.nome}</h1>
-        <p className="slogan">Soluções inteligentes ao seu alcance.</p>
-        <p className="descricao">{desafio.subtitulo}</p>
+      <div className="ferramenta-curriculo">
+        <header className="cabecalho-ferramenta">
+          <div>
+            <h1>{desafio.nome}</h1>
+            <p className="slogan">Soluções inteligentes ao seu alcance.</p>
+          </div>
+          <nav className="navegacao-ferramenta" aria-label="Seções do criador de currículo">
+            <a href="#dados-curriculo">Seus dados</a>
+            <a href="#resultado-curriculo">Resultado</a>
+            <a href="#modelos-curriculo">Modelos</a>
+          </nav>
+        </header>
+        <div className="area-trabalho">
+          <section className="painel-dados" id="dados-curriculo" aria-labelledby="titulo-dados">
+            <header className="cabecalho-secao">
+              <span className="etapa-ferramenta" aria-hidden="true">01</span>
+              <div>
+                <h2 id="titulo-dados">Seus dados</h2>
+                <p>{desafio.subtitulo}</p>
+              </div>
+            </header>
         <form onSubmit={analisar} className="formulario" aria-busy={analisando}>
           {desafio.campos.map(({ id, rotulo, linhas }) => (
             <div className="campo-curriculo" key={id}>
@@ -76,11 +94,26 @@ export default function Analisador({ desafio }) {
           {analisando && <p role="status">Montando seu currículo...</p>}
           {erro && <p className="erro" role="alert">{erro}</p>}
         </form>
-        <section className="resultado" aria-live="polite" aria-busy={analisando}>
-          <h2>Resposta</h2>
-          <div className="area-resposta">{resposta}</div>
-        </section>
-      </section>
+          </section>
+          <section className="resultado resultado-painel" id="resultado-curriculo" aria-labelledby="titulo-resultado" aria-live="polite" aria-busy={analisando}>
+            <header className="cabecalho-secao">
+              <span className="etapa-ferramenta" aria-hidden="true">02</span>
+              <div>
+                <h2 id="titulo-resultado">Seu currículo</h2>
+                <p>Confira a resposta antes de usar e veja os modelos abaixo.</p>
+              </div>
+            </header>
+            <div className="area-resposta">{resposta || (
+              <div className="resultado-vazio">
+                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="10" y="5" width="28" height="38" rx="4" stroke="currentColor" strokeWidth="2" /><path d="M17 15h14M17 23h14M17 31h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+                <p>Seu currículo aparecerá aqui.</p>
+                <span>Preencha seus dados e clique em “{desafio.botao}”.</span>
+              </div>
+            )}</div>
+          </section>
+        </div>
+        <ModelosCurriculo resposta={resposta} />
+      </div>
     </main>
   );
 }
