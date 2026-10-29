@@ -82,3 +82,6 @@ Os três modelos apresentam exatamente o mesmo texto gerado pela IA, sem acresce
 
 
 Os modelos têm estruturas distintas: Clássico em coluna única com cabeçalho centralizado; Moderno com cursos e habilidades na barra lateral; Essencial com blocos em duas colunas. As seções são reconhecidas apenas pelos títulos explícitos da resposta, preservando todas as linhas originais. Seções não reconhecidas permanecem no texto, sem inferir ou criar conteúdo. Em telas pequenas, a visualização completa se adapta para uma coluna.
+
+
+O botão **Copiar resultado**, acima da resposta, copia somente o texto do currículo gerado, preservando acentos, espaços e quebras de linha. Fica desabilitado antes da geração e durante uma nova análise. O navegador informa o sucesso ou orienta a cópia manual caso bloqueie a área de transferência.

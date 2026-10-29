@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import ModelosCurriculo from "./modelos-curriculo";
+import CopiarResultado from "./copiar-resultado";
 
 export default function Analisador({ desafio }) {
   const [campos, setCampos] = useState({});
@@ -103,6 +104,7 @@ export default function Analisador({ desafio }) {
                 <p>Confira a resposta antes de usar e veja os modelos abaixo.</p>
               </div>
             </header>
+            <CopiarResultado key={resposta} texto={resposta} disabled={analisando} />
             <div className="area-resposta">{resposta || (
               <div className="resultado-vazio">
                 <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="10" y="5" width="28" height="38" rx="4" stroke="currentColor" strokeWidth="2" /><path d="M17 15h14M17 23h14M17 31h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
