@@ -50,9 +50,10 @@ export default function Analisador({ desafio }) {
   }
 
   return (
-    <main className="pagina">
-      <section className="conteudo">
+    <main className="pagina pagina-principal">
+      <section className="conteudo conteudo-formulario">
         <h1>{desafio.nome}</h1>
+        <p className="slogan">Soluções inteligentes ao seu alcance.</p>
         <p className="descricao">{desafio.subtitulo}</p>
         <form onSubmit={analisar} className="formulario" aria-busy={analisando}>
           {desafio.campos.map(({ id, rotulo, linhas }) => (

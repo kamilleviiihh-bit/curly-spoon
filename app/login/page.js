@@ -14,7 +14,7 @@ export default async function Login({ searchParams }) {
   if (user) redirect("/");
   const params = await searchParams;
   return (
-    <main className="pagina">
+    <main className="pagina pagina-login">
       <section className="conteudo">
         <h1>Entrar</h1>
         <p className="descricao">Entre ou crie sua conta para acessar Crie seu 1° curriculo!</p>
