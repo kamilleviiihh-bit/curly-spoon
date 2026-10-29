@@ -79,3 +79,6 @@ Abra o link de recuperação no mesmo navegador em que solicitou, pois o fluxo u
 A página principal organiza o formulário e o resultado lado a lado no computador e em sequência no celular, com atalhos para dados, resultado e modelos. Ao final, os modelos **Clássico**, **Moderno** e **Essencial** podem ser abertos para leitura completa, inclusive pelo teclado.
 
 Os três modelos apresentam exatamente o mesmo texto gerado pela IA, sem acrescentar ou deduzir informações. Antes da geração, exibem apenas campos ilustrativos entre colchetes. A escolha de visualização não faz uma nova chamada à IA, não modifica a resposta nem altera o histórico salvo.
+
+
+Os modelos têm estruturas distintas: Clássico em coluna única com cabeçalho centralizado; Moderno com cursos e habilidades na barra lateral; Essencial com blocos em duas colunas. As seções são reconhecidas apenas pelos títulos explícitos da resposta, preservando todas as linhas originais. Seções não reconhecidas permanecem no texto, sem inferir ou criar conteúdo. Em telas pequenas, a visualização completa se adapta para uma coluna.

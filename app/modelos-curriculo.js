@@ -1,11 +1,12 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { separarSecoes } from "./modelos-formatacao";
 
 const modelos = [
-  { id: "classico", nome: "Clássico", descricao: "Tipografia tradicional e divisões discretas." },
-  { id: "moderno", nome: "Moderno", descricao: "Faixa lateral azul e detalhes em verde-água." },
-  { id: "essencial", nome: "Essencial", descricao: "Visual compacto, direto e com mais espaço livre." },
+  { id: "classico", nome: "Clássico", descricao: "Uma coluna, cabeçalho centralizado e tipografia clássica." },
+  { id: "moderno", nome: "Moderno", descricao: "Barra lateral azul para cursos e habilidades; experiências ao lado." },
+  { id: "essencial", nome: "Essencial", descricao: "Cabeçalho compacto e seções organizadas em dois blocos por linha." },
 ];
 
 const exemplo = `[Seu nome]
@@ -28,6 +29,35 @@ HARD SKILLS
 
 SOFT SKILLS
 [Habilidades comportamentais informadas por você]`;
+
+function SecaoModelo({ secao }) {
+  return (
+    <section className="secao-folha">
+      <h4>{secao.titulo}</h4>
+      <div className="conteudo-secao-folha">{secao.linhas.join("\n")}</div>
+    </section>
+  );
+}
+
+function FolhaCurriculo({ modelo, texto }) {
+  const { cabecalho, secoes } = separarSecoes(texto);
+  const lateral = new Set(["CURSOS", "HARD SKILLS", "SOFT SKILLS", "HABILIDADES"]);
+  const renderizar = (lista) => lista.map(({ secao, indice }) => <SecaoModelo key={indice} secao={secao} />);
+  const itens = secoes.map((secao, indice) => ({ secao, indice }));
+  return (
+    <div className={`folha-curriculo modelo-${modelo}`}>
+      {cabecalho.length > 0 && <div className="cabecalho-folha">{cabecalho.join("\n")}</div>}
+      {modelo === "moderno" ? (
+        <div className="corpo-folha-moderno">
+          <aside className="lateral-folha">{renderizar(itens.filter(({ secao }) => lateral.has(secao.tipo)))}</aside>
+          <div className="principal-folha">{renderizar(itens.filter(({ secao }) => !lateral.has(secao.tipo)))}</div>
+        </div>
+      ) : (
+        <div className="secoes-folha">{renderizar(itens)}</div>
+      )}
+    </div>
+  );
+}
 
 export default function ModelosCurriculo({ resposta }) {
   const dialog = useRef(null);
@@ -54,9 +84,7 @@ export default function ModelosCurriculo({ resposta }) {
         {modelos.map((modelo) => (
           <article className="cartao-modelo" key={modelo.id}>
             <div className="miniatura-modelo" aria-hidden="true">
-              <div className={`folha-curriculo modelo-${modelo.id}`}>
-                <pre className="texto-modelo">{texto}</pre>
-              </div>
+              <FolhaCurriculo modelo={modelo.id} texto={texto} />
             </div>
             <div className="descricao-modelo">
               <h3>{modelo.nome}</h3>
@@ -75,9 +103,7 @@ export default function ModelosCurriculo({ resposta }) {
           <button type="button" className="botao-secundario" onClick={() => dialog.current.close()}>Fechar</button>
         </div>
         <div className="visualizacao-modelo">
-          <div className={`folha-curriculo modelo-${selecionado.id}`}>
-            <pre className="texto-modelo">{texto}</pre>
-          </div>
+          <FolhaCurriculo modelo={selecionado.id} texto={texto} />
         </div>
       </dialog>
     </section>
