@@ -36,4 +36,4 @@ export async function middleware(request) {
   return response;
 }
 
-export const config = { matcher: ["/", "/login", "/auth/callback", "/historico"] };
+export const config = { matcher: ["/", "/login", "/auth/callback", "/historico", "/esqueci-senha", "/redefinir-senha"] };

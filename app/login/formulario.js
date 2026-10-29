@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import Link from "next/link";
 import { autenticar } from "./actions";
 
 export default function FormularioLogin({ erroConfirmacao }) {
@@ -21,6 +22,7 @@ export default function FormularioLogin({ erroConfirmacao }) {
         <button type="submit" name="intent" value="login" disabled={pending}>Entrar</button>
         <button type="submit" name="intent" value="signup" className="botao-secundario" disabled={pending}>Criar conta</button>
       </div>
+      <Link href="/esqueci-senha" className="link-recuperacao">Esqueci a senha</Link>
       {pending && <p role="status">Aguarde...</p>}
     </form>
   );

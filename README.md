@@ -63,3 +63,12 @@ Para conferir no projeto real, entre com a conta A, gere dois currículos e conf
 
 
 O prompt de currículo orienta usar somente o conteúdo explicitamente informado em cada campo, sem deduzir habilidades a partir de cursos ou experiências, sem inventar resultados ou métricas e sem exigir uma quantidade mínima de itens. Campos vazios devem ser omitidos; a revisão de ortografia e pontuação não deve ampliar o significado. Respostas já salvas no histórico não são reescritas.
+
+
+## Recuperação de senha
+
+O link **Esqueci a senha** em `/login` abre `/esqueci-senha`. O Supabase envia um e-mail com link para `/auth/callback?fluxo=recuperacao`; o servidor troca o código PKCE por uma sessão e encaminha para `/redefinir-senha`. A alteração da senha exige uma sessão validada no servidor. A mensagem de envio não revela se o e-mail tem uma conta.
+
+Em Authentication → URL Configuration, mantenha a Site URL do aplicativo e permita o callback de recuperação no mesmo domínio. A regra `https://seu-dominio/**` já abrange esse caminho; no desenvolvimento, permita também `http://localhost:3000/**`. Mantenha o template de recuperação com o link de confirmação padrão do Supabase (`{{ .ConfirmationURL }}`), e configure o envio de e-mails no Supabase conforme as necessidades do projeto.
+
+Abra o link de recuperação no mesmo navegador em que solicitou, pois o fluxo usa PKCE. Links expirados ou já usados exigem nova solicitação. A tela de sucesso mantém a sessão e permite ir ao site. Nenhuma chave adicional ou mudança de tabela é necessária.
